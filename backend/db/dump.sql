@@ -38,7 +38,7 @@ CREATE TABLE Expense (
 CREATE TABLE Category (
     id VARCHAR(255) NOT NULL UNIQUE,
     name VARCHAR(255) NOT NULL UNIQUE,
-    default BOOLEAN NOT NULL DEFAULT false,
+    is_default BOOLEAN NOT NULL DEFAULT false,
     PRIMARY KEY (id)
 );
 
