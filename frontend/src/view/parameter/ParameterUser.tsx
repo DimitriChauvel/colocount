@@ -1,11 +1,13 @@
-import React from 'react';
+import React from "react";
+import Nav from "../../components/nav/nav";
 
 const ParameterUser = () => {
-    return (
-        <div>
-            params
-        </div>
-    );
+  return (
+    <div>
+      <Nav />
+      params
+    </div>
+  );
 };
 
 export default ParameterUser;
