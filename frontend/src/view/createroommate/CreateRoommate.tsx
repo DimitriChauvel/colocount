@@ -1,11 +1,13 @@
-import React from 'react';
+import React from "react";
+import Nav from "../../components/nav/nav";
 
 const CreateRoommate = () => {
-    return (
-        <div>
-            createroom
-        </div>
-    );
+  return (
+    <div>
+      <Nav />
+      createroom
+    </div>
+  );
 };
 
 export default CreateRoommate;

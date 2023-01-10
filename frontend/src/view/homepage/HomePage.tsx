@@ -1,11 +1,12 @@
-import React from 'react';
-
+import React from "react";
+import Nav from "../../components/nav/nav";
 const Homepage = () => {
-    return (
-        <div>
-            home
-        </div>
-    );
+  return (
+    <div>
+      <Nav />
+      home
+    </div>
+  );
 };
 
 export default Homepage;

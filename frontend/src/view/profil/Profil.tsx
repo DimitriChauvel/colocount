@@ -1,11 +1,13 @@
-import React from 'react';
+import React from "react";
+import Nav from "../../components/nav/nav";
 
 const Profil = () => {
-    return (
-        <div>
-            profil
-        </div>
-    );
+  return (
+    <div>
+      <Nav />
+      profil
+    </div>
+  );
 };
 
 export default Profil;
