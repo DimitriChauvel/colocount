@@ -17,7 +17,7 @@ services:
       MYSQL_DATABASE: data
       MYSQL_ROOT_PASSWORD: password
     ports:
-      - '1020:1020'
+      - '1020:3306'
     volumes:
       # Pour lancer un dump automatiquement au montage du conteneur
       - ./backend/db/dump.sql:/docker-entrypoint-initdb.d/dump.sql
