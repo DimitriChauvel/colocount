@@ -3,12 +3,12 @@ version: '3.1'
 services:
   php:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - '1010:1010'
+      - '1010:80'
     volumes:
-      - ./app:/var/www/html
+      - ./backend/app:/var/www/html
 
   db:
     image: 'mysql'
