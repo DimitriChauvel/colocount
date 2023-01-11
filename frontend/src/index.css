@@ -6,18 +6,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300;400&display=swap%27");
 @import url("https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300;400;500&display=swap%27");
 
-.orange {
-  color: #ff7033;
-}
-
-.blue {
-  color: #088f8f;
-}
-
 .orange-bg {
   background-color: #ff7033;
 }
 
 .blue-bg {
   background-color: #088f8f;
+}
+
+.border-orange{
+    border: solid #ff7033; 
+}
+
+.border-blue{
+    border: solid #088f8f;
 }
