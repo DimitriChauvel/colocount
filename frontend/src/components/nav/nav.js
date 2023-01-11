@@ -18,7 +18,7 @@ function Nav(props) {
     navigate("/Connexion");
   };
   return (
-    <div className="flex justify-end m-4 space-x-2">
+    <div className="flex justify-end p-6 space-x-2 border-b">
       <div onClick={toHome} className="">
         <Button name="Home" />
       </div>
