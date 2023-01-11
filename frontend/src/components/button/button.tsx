@@ -11,7 +11,7 @@ const Button: React.FC<Props> = ({ onClick, name = "Button" }) => {
   return (
     <button
       onClick={onClick}
-      className="py-2 px-4 orange-bg text-white font-semibold rounded-md shadow-md hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-75"
+      className="py-2 px-4 bg-orange-500 text-white font-semibold rounded-md shadow-md hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-75"
     >
       {name}
     </button>

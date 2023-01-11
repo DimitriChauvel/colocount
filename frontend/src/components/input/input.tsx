@@ -19,10 +19,12 @@ const Input: React.FC<Props> = ({
   return (
     <div className="Input">
       <input
-        className="h-10 w-5/5 border-blue px-2 rounded-md shadow-lg"
+        className="h-10 w-5/5 px-2 rounded-md shadow-lg focus:outline-none hover:ring-2 hover:ring-blue focus:ring-opacity-75
+"
         placeholder={placeholder}
         type={type}
         required={required}
+        value={value}
         onChange={(event) => {
           setValue(event.target.value);
           onChange(event);
