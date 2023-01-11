@@ -2,7 +2,6 @@ import { React } from "react";
 import { useNavigate } from "react-router-dom";
 import "./nav.css";
 import Button from "../button/button";
-import ButtonCross from "../buttonCross/buttonCross";
 
 function Nav(props) {
   const navigate = useNavigate();
@@ -20,9 +19,6 @@ function Nav(props) {
   };
   return (
     <div className="flex justify-end m-4 space-x-2">
-      <div>
-        <ButtonCross />
-      </div>
       <div onClick={toHome} className="">
         <Button name="Home" />
       </div>
