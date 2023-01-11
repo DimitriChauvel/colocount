@@ -26,9 +26,12 @@ function CreateAccount() {
   const handleClickLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
     navigate("/connexion");
   };
+
   function register() {
+    //En cours Attente de l'API
     sessionStorage.setItem("user", state.email);
   }
+
   return (
     <div>
       {" "}

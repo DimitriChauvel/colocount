@@ -57,7 +57,6 @@ function Login() {
             required={true}
           />
         </div>
-
         <div>
           <Button name="Sign in" onClick={connect} />
         </div>
