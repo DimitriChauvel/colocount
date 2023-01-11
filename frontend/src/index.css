@@ -6,18 +6,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300;400&display=swap%27");
 @import url("https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300;400;500&display=swap%27");
 
-.orange-bg {
-  background-color: #ff7033;
-}
-
-.blue-bg {
-  background-color: #088f8f;
-}
-
-.border-orange{
-    border: solid #ff7033; 
-}
-
-.border-blue{
-    border: solid #088f8f;
+HEAD html,
+body,
+.App,
+#root {
+  width: 100%;
+  height: 100vh;
+  background-color: whitesmoke;
 }
