@@ -7,4 +7,9 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  
+  colors: {
+    'orange': '#ff7033',
+    'blue': '#088f8f',
+  },
 };
