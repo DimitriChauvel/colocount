@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     die;
 }
 
-
 session_start();
 
 //require_once __DIR__ . '/../vendor/autoload.php';

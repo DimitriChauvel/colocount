@@ -3,7 +3,6 @@
 use App\Route\Route;
 
 require_once 'public/autoload.php';
-
 require_once 'vendor/autoload.php';
 
 $controllerDir = dirname(__FILE__) . '/src/Controller';
