@@ -3,12 +3,12 @@ version: '3.1'
 services:
   php:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - '1010:1010'
+      - '1010:80'
     volumes:
-      - ./app:/var/www/html
+      - ./backend/app:/var/www/html
 
   db:
     image: 'mysql'
@@ -17,7 +17,7 @@ services:
       MYSQL_DATABASE: data
       MYSQL_ROOT_PASSWORD: password
     ports:
-      - '1020:1020'
+      - '1020:3306'
     volumes:
       # Pour lancer un dump automatiquement au montage du conteneur
       - ./backend/db/dump.sql:/docker-entrypoint-initdb.d/dump.sql
