@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Manager;
+namespace App\Model\Manager;
 
-use App\Entity\FlatshareToCategory;
+use App\Model\Entity\FlatshareToCategory;
 
 class FlatshareToCategoryManager extends BaseManager
 {
