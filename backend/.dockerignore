@@ -1,0 +1,5 @@
+.dockerignore
+.gitignore
+Dockerfile.prod
+Dockerfile.dev
+/vendor
