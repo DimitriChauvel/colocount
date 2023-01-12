@@ -20,7 +20,7 @@ sudo docker compose -f docker-compose.yml -f docker-compose.dev.yml up
 #### Stop the development server:
 ```shell
 cd bin/
-./deploy.sh dev up
+./deploy.sh dev down
 ```
 
 or
