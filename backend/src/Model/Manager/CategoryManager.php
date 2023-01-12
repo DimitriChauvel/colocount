@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Manager;
+namespace App\Model\Manager;
 
-use App\Entity\BaseEntity;
-
-use App\Entity\Category;
+use App\Model\Entity\BaseEntity;
+use App\Model\Entity\Category;
 
 class CategoryManager extends BaseManager
 {

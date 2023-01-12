@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Entity;
+namespace App\Model\Entity;
 
-use App\Traits\Hydrator;
+use App\Model\Traits\Hydrator;
 
 
-abstract class BaseEntity
+abstract class BaseEntity implements \JsonSerializable
 {
     use Hydrator;
 

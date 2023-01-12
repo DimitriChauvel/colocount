@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Manager;
+namespace App\Model\Manager;
 
-use App\Entity\Task;
+use App\Model\Entity\Task;
 
 class TaskManager extends BaseManager
 {

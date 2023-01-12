@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Manager;
+namespace App\Model\Manager;
 
-use App\Entity\Expense;
+use App\Model\Entity\Expense;
 
 class ExpenseManager extends BaseManager
 {

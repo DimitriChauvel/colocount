@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Entity;
-
+namespace App\Model\Entity;
 class User extends BaseEntity
 {
     private string $id;
@@ -137,6 +136,4 @@ class User extends BaseEntity
         $this->password = $password;
         return $this;
     }
-
-
 }

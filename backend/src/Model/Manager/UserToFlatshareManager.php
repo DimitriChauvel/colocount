@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Manager;
+namespace App\Model\Manager;
 
-use App\Entity\UserToFlatshare;
+use App\Model\Entity\UserToFlatshare;
 
 class UserToFlatshareManager extends BaseManager
 {
