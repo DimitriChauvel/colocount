@@ -22,14 +22,4 @@ class PDOFactory implements Database
     {
         return new \PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbName, $this->userName, $this->password);
     }
-
-    public function getPostgresPDO(): \PDO
-    {
-        return new \PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbName, $this->userName, $this->password);
-    }
-
-    public function getMongoPDO(): \PDO
-    {
-        return new \PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbName, $this->userName, $this->password);
-    }
 }
