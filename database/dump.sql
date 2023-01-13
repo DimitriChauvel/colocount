@@ -6,6 +6,7 @@ CREATE TABLE Users  (
     phone VARCHAR(255) UNIQUE,
     profile_picture VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
+    date_created DATETIME NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -13,6 +14,7 @@ CREATE TABLE Flatshare (
      id VARCHAR(255) NOT NULL UNIQUE,
      banner_picture VARCHAR(255) NOT NULL,
      name VARCHAR(255) NOT NULL,
+     date_created DATETIME NOT NULL,
      PRIMARY KEY (id)
 );
 
@@ -20,8 +22,14 @@ CREATE TABLE UserToFlatshare (
     id VARCHAR(255) NOT NULL UNIQUE,
     user_id VARCHAR(255) NOT NULL,
     flatshare_id VARCHAR(255) NOT NULL,
-    role VARCHAR(255) NOT NULL DEFAULT 'due',
-    due FLOAT NOT NULL DEFAULT '0',
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE UserToExpense (
+    id VARCHAR(255) NOT NULL UNIQUE,
+    user_id VARCHAR(255) NOT NULL,
+    expense_id VARCHAR(255) NOT NULL,
+    due_amount DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -32,6 +40,7 @@ CREATE TABLE Expense (
     flatshare_id VARCHAR(255) NOT NULL,
     sum FLOAT NOT NULL,
     category_id VARCHAR(255) NOT NULL,
+    date_created DATETIME NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -48,7 +57,6 @@ CREATE TABLE Task (
     flatshare_id VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
-
 
 CREATE TABLE FlatshareToCategory (
     id VARCHAR(255) NOT NULL,
@@ -71,3 +79,7 @@ ALTER TABLE Task ADD CONSTRAINT Task_fk0 FOREIGN KEY (flatshare_id) REFERENCES F
 ALTER TABLE FlatshareToCategory ADD CONSTRAINT FlatshareToCategory_fk0 FOREIGN KEY (flatshare_id) REFERENCES Flatshare(id);
 
 ALTER TABLE FlatshareToCategory ADD CONSTRAINT FlatshareToCategory_fk1 FOREIGN KEY (category_id) REFERENCES Category(id);
+
+ALTER TABLE UserToExpense ADD CONSTRAINT UserToExpense_fk0 FOREIGN KEY (user_id) REFERENCES Users(id);
+
+ALTER TABLE UserToExpense ADD CONSTRAINT UserToExpense_fk1 FOREIGN KEY (expense_id) REFERENCES Expense(id);
