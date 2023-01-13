@@ -8,15 +8,15 @@ import CardMoney from "../../components/card-money/card-money";
 import CardExpense from "../../components/card-expense/card-expense";
 import Button from "../../components/button/button";
 import Research from "../../components/research/research";
+import Select from "../../components/select/Select";
 
 const Balance = () => {
   const [selectedTab, setSelectedTab] = useState<string | null>("balance");
 
   function handleClickNewExpense() {}
   function handleClickExpense() {}
-  function handleChangeSearch() {
-    console.log("test");
-  }
+  function handleChangeSearch() {}
+  function handleClickSelect() {}
 
   return (
     <div>
@@ -85,10 +85,18 @@ const Balance = () => {
             role="tabpanel"
           >
             <div className="w-full">
-              <div>
-                <Research onChange={handleChangeSearch} />
+              <div className="flex gap-4">
+                <div className="w-full">
+                  <Research onChange={handleChangeSearch} />
+                </div>
+
+                <div className="z-40">
+                  <Select onClick={handleClickSelect} />
+                </div>
               </div>
-              <CardExpense onClick={handleClickExpense} />
+              <div className="z-10">
+                <CardExpense onClick={handleClickExpense} />
+              </div>
             </div>
           </div>
         </div>
