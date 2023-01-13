@@ -12,9 +12,19 @@ function CreateAccount() {
   const [state, setState] = useState({
     email: "",
     password: "",
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
   });
+
+  const postData = async(url: string, data: any) => {
+        const response = await fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(data)
+        });
+        const json = await response.json();
+        return json;
+};
+
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -28,7 +38,7 @@ function CreateAccount() {
   };
 
   function register() {
-    //En cours Attente de l'API
+    postData('http://localhost:1010/users', state)
     sessionStorage.setItem("user", state.email);
   }
 
@@ -42,14 +52,14 @@ function CreateAccount() {
         <h1>Register</h1>
         <div className="flex flex-col gap-2">
           <Input
-            onChange={(event) => handleChange(event, "firstName")}
+            onChange={(event) => handleChange(event, "firstname")}
             placeholder="First Name"
             type="text"
             required={true}
             key="firstName"
           />
           <Input
-            onChange={(event) => handleChange(event, "lastName")}
+            onChange={(event) => handleChange(event, "lastname")}
             placeholder="Last Name"
             type="text"
             required={true}
