@@ -5,6 +5,7 @@ import "./CreateAccount.css";
 
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
+import AddImage from "../../components/addImage/addImage";
 
 function CreateAccount() {
   const navigate = useNavigate();
@@ -26,6 +27,9 @@ function CreateAccount() {
   const handleClickLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
     navigate("/connexion");
   };
+  const handleClickImage = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+  }
 
   function register() {
     //En cours Attente de l'API
@@ -34,13 +38,17 @@ function CreateAccount() {
 
   return (
     <div>
+
       {" "}
       <div className="flex justify-end m-4">
+
         <Button name="Login" onClick={handleClickLogin} />
       </div>
       <div className="flex flex-col gap-4 items-center container-register">
         <h1>Register</h1>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 items-center">
+          <AddImage onClick={handleClickImage}
+          />
           <Input
             onChange={(event) => handleChange(event, "firstName")}
             placeholder="First Name"
