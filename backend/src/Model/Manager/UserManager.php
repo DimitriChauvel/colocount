@@ -38,7 +38,7 @@ class UserManager extends BaseManager
         $entityBody = json_decode(file_get_contents('php://input'), true);
         $query = $this->pdo->prepare(<<<EOT
             INSERT INTO Users (id, firstname, lastname, email, phone, profile_picture, password) 
-            VALUES (:id, :firstname, :lastname, :email, :phone, :profile_picture, :password)
+            VALUES (:id, :firstname, :lastname, :email, :phone, :profile_picture, :password, :date_created)
         EOT);
         $query->bindValue(':id', $entityBody['id']);
         $query->bindValue(':firstname', $entityBody["firstname"]);
@@ -47,6 +47,7 @@ class UserManager extends BaseManager
         $query->bindValue(':phone', $entityBody["phone"]);
         $query->bindValue(':profile_picture', $entityBody["profile_picture"]);
         $query->bindValue(':password', $entityBody["password"]);
+        $query->bindValue(':date_created', $entityBody["date_created"]);
         $query->execute();
 
         return new User($entityBody);
@@ -62,7 +63,8 @@ class UserManager extends BaseManager
                 email = :email,
                 phone = :phone,
                 profile_picture = :profile_picture,
-                password = :password
+                password = :password,
+                date_created = :date_created
             WHERE id = :id
         EOT);
         $query->bindValue(':id', $entityBody['id']);
@@ -72,6 +74,7 @@ class UserManager extends BaseManager
         $query->bindValue(':phone', $entityBody["phone"]);
         $query->bindValue(':profile_picture', $entityBody["profile_picture"]);
         $query->bindValue(':password', $entityBody["password"]);
+        $query->bindValue(':date_created', $entityBody["date_created"]);
         $query->execute();
 
         return new User($entityBody);
