@@ -7,10 +7,10 @@ function Nav(props) {
   const navigate = useNavigate();
 
   function toProfil() {
-    navigate("/ParameterUser");
+    navigate("/Profil");
   }
 
-  function toHome() {
+  function ToHome() {
     navigate("/");
   }
   const toLogout = () => {
@@ -19,7 +19,7 @@ function Nav(props) {
   };
   return (
     <div className="flex justify-end p-6 space-x-2 border-b">
-      <div onClick={toHome} className="">
+      <div onClick={ToHome} className="">
         <Button name="Home" />
       </div>
       <div onClick={toProfil} className="">
