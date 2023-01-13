@@ -7,6 +7,23 @@ class Flatshare extends BaseEntity
     private string $id;
     private string $banner_picture;
     private string $name;
+    private string $date_created;
+
+    /**
+     * @return string
+     */
+    public function getDateCreated(): string
+    {
+        return $this->date_created;
+    }
+
+    /**
+     * @param string $date_created
+     */
+    public function setDateCreated(string $date_created): void
+    {
+        $this->date_created = $date_created;
+    }
 
     /**
      * @return string

@@ -10,6 +10,7 @@ class Expense extends BaseEntity
     private string $flatshare_id;
     private float $sum;
     private string $category_id;
+    private string $date_created;
 
     /**
      * @return string
@@ -17,6 +18,22 @@ class Expense extends BaseEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateCreated(): string
+    {
+        return $this->date_created;
+    }
+
+    /**
+     * @param string $date_created
+     */
+    public function setDateCreated(string $date_created): void
+    {
+        $this->date_created = $date_created;
     }
 
     /**
