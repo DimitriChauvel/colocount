@@ -10,6 +10,7 @@ class User extends BaseEntity
     private string $phone;
     private string $profile_picture;
     private string $password;
+    private string $date_created;
 
     /**
      * @return string
@@ -17,6 +18,22 @@ class User extends BaseEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateCreated(): string
+    {
+        return $this->date_created;
+    }
+
+    /**
+     * @param string $date_created
+     */
+    public function setDateCreated(string $date_created): void
+    {
+        $this->date_created = $date_created;
     }
 
     /**
