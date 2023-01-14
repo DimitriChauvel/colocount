@@ -5,6 +5,12 @@ use App\Route\Route;
 require_once 'public/autoload.php';
 require_once 'vendor/autoload.php';
 
+header("Access-Control-Allow-Origin: http://localhost:3000/");
+header("Access-Control-Allow-Credential: true");
+header("Access-Control-Allow-Headers: authorization, content-type");
+header("Content-Type: application/json");
+
+
 $controllerDir = dirname(__FILE__) . '/src/Controller';
 $dirs = scandir($controllerDir);
 $controllers = [];
