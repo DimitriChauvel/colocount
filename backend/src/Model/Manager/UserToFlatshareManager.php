@@ -38,7 +38,7 @@ class UserToFlatshareManager extends BaseManager
 
     public function postOne(): UserToFlatshare {
         $entityBody = json_decode(file_get_contents('php://input'), true);
-        $id = uniqid(uniqid('user_'));
+        $id = uniqid('userToFlatshare_');
         $query = $this->pdo->prepare(<<<EOT
             INSERT INTO userToFlatshare (id, user_id, flatshare_id)
             VALUES (:id, :user_id, :flatshare_id)
