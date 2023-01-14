@@ -1,14 +1,12 @@
 import { title } from "process";
 import React from "react";
 import Category from "../../components/category/Category";
-import ArrowRight from "../../assets/icons/arrowRight";
 const Avatar = require("../../assets/img/avatarDefault.png");
 
 interface Props {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   name?: string;
   img?: string;
-  argent?: string;
   title?: string;
   money?: string;
   date?: string;

@@ -5,12 +5,12 @@ const Avatar = require("../../assets/img/avatarDefault.png");
 interface Props {
   name?: string;
   img?: string;
-  argent?: string;
+  money?: string;
 }
 
 const CardMoney: React.FC<Props> = ({
   name = "Pseudo",
-  argent = "",
+  money = "",
   img = "",
 }) => {
   return (
@@ -27,7 +27,7 @@ const CardMoney: React.FC<Props> = ({
         <div className="w-24 h-24 ">
           <ArrowRight />
         </div>
-        <span className="text-white">{argent}</span>
+        <span className="text-white">{money}</span>
       </div>
 
       <div className="flex gap-1 right">
