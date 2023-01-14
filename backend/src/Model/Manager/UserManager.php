@@ -35,27 +35,28 @@ class UserManager extends BaseManager
 
     public function postOne(): User
     {
-        $entityBody = json_decode(file_get_contents('php://input'), true);
+        $body = json_decode(file_get_contents('php://input'), true);
+        $uniqueId = uniqid('user_');
+
         $query = $this->pdo->prepare(<<<EOT
-            INSERT INTO Users (id, firstname, lastname, email, phone, profile_picture, password) 
-            VALUES (:id, :firstname, :lastname, :email, :phone, :profile_picture, :password, :date_created)
+            INSERT INTO Users (id, firstname, lastname, email, password)
+            VALUES (:id, :firstname, :lastname, :email, :password)
         EOT);
-        $query->bindValue(':id', $entityBody['id']);
-        $query->bindValue(':firstname', $entityBody["firstname"]);
-        $query->bindValue(':lastname', $entityBody["lastname"]);
-        $query->bindValue(':email', $entityBody["email"]);
-        $query->bindValue(':phone', $entityBody["phone"]);
-        $query->bindValue(':profile_picture', $entityBody["profile_picture"]);
-        $query->bindValue(':password', $entityBody["password"]);
-        $query->bindValue(':date_created', $entityBody["date_created"]);
+        $query->bindValue(':id', $uniqueId, \PDO::PARAM_STR);
+        $query->bindValue(':firstname', $body['firstname'], \PDO::PARAM_STR);
+        $query->bindValue(':lastname', $body['lastname'], \PDO::PARAM_STR);
+        $query->bindValue(':email', $body['email'], \PDO::PARAM_STR);
+        $query->bindValue(':password', password_hash($body['password'], PASSWORD_DEFAULT), \PDO::PARAM_STR);
         $query->execute();
 
-        return new User($entityBody);
+        return $this->getOne($uniqueId);
     }
 
     public function putOne(): User
     {
-        $entityBody = json_decode(file_get_contents('php://input'), true);
+        $body = json_decode(file_get_contents('php://input'), true);
+        $user = new User($body);
+
         $query = $this->pdo->prepare(<<<EOT
             UPDATE Users 
             SET firstname = :firstname,
@@ -67,16 +68,27 @@ class UserManager extends BaseManager
                 date_created = :date_created
             WHERE id = :id
         EOT);
-        $query->bindValue(':id', $entityBody['id']);
-        $query->bindValue(':firstname', $entityBody["firstname"]);
-        $query->bindValue(':lastname', $entityBody["lastname"]);
-        $query->bindValue(':email', $entityBody["email"]);
-        $query->bindValue(':phone', $entityBody["phone"]);
-        $query->bindValue(':profile_picture', $entityBody["profile_picture"]);
-        $query->bindValue(':password', $entityBody["password"]);
-        $query->bindValue(':date_created', $entityBody["date_created"]);
+
+        return $this->extracted($query, $user);
+    }
+
+    /**
+     * @param bool|\PDOStatement $query
+     * @param User $user
+     * @return User
+     */
+    public function extracted(bool|\PDOStatement $query, User $user): User
+    {
+        $query->bindValue(':id', $user->getId(), \PDO::PARAM_STR);
+        $query->bindValue(':firstname', $user->getFirstname(), \PDO::PARAM_STR);
+        $query->bindValue(':lastname', $user->getLastname(), \PDO::PARAM_STR);
+        $query->bindValue(':email', $user->getEmail(), \PDO::PARAM_STR);
+        $query->bindValue(':phone', $user->getPhone(), \PDO::PARAM_STR);
+        $query->bindValue(':profile_picture', $user->getProfilePicture(), \PDO::PARAM_STR);
+        $query->bindValue(':password', $user->getPassword(), \PDO::PARAM_STR);
+        $query->bindValue(':date_created', $user->getDateCreated(), \PDO::PARAM_STR);
         $query->execute();
 
-        return new User($entityBody);
+        return $this->getOne($user->getId());
     }
 }

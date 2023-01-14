@@ -3,18 +3,18 @@ CREATE TABLE Users  (
     firstname VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    phone VARCHAR(255) UNIQUE,
-    profile_picture VARCHAR(255) NOT NULL,
+    phone VARCHAR(255) UNIQUE DEFAULT NULL,
+    profile_picture VARCHAR(255),
     password VARCHAR(255) NOT NULL,
-    date_created DATETIME NOT NULL,
+    date_created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE Flatshare (
      id VARCHAR(255) NOT NULL UNIQUE,
-     banner_picture VARCHAR(255) NOT NULL,
+     banner_picture VARCHAR(255) DEFAULT NULL,
      name VARCHAR(255) NOT NULL,
-     date_created DATETIME NOT NULL,
+     date_created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
      PRIMARY KEY (id)
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE Expense (
     flatshare_id VARCHAR(255) NOT NULL,
     sum FLOAT NOT NULL,
     category_id VARCHAR(255) NOT NULL,
-    date_created DATETIME NOT NULL,
+    date_created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
 
