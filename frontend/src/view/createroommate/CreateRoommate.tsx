@@ -5,6 +5,7 @@ import Nav from "../../components/nav/nav";
 import Input from "../../components/input/input";
 import Button from "../../components/button/button";
 import ToHome from "../../components/nav/nav";
+import { getFetch } from "../../controller/getFetch";
 
 import { useNavigate } from "react-router-dom";
 import CheckLog from "../../controller/log";
@@ -30,10 +31,14 @@ function CreateRoommate() {
   const [state, setState] = useState({
     name: "",
     banner_picture: "banner_picture",
+    user_id: "",
   });
   let { method } = useParams();
 
   async function handleSubmit() {
+    var email = sessionStorage.getItem("user");
+    const data = await getFetch(`/users/email/${email}`);
+    setState({ ...state, user_id: data.id });
     if ((await postFetch("/flatshare", state)) === false) {
     } else {
       navigate("/balance");

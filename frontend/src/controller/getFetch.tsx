@@ -1,6 +1,6 @@
 export async function getFetch(url: string) {
   try {
-    const response = await fetch(`http://localhost:1010/${url}`);
+    const response = await fetch(`http://localhost:1010${url}`);
     if (!response.ok) {
       throw new Error(response.statusText);
     }

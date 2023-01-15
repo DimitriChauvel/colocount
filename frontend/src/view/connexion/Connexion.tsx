@@ -4,7 +4,6 @@ import "./Connexion.css";
 
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
-import { getFetch } from "../../controller/getFetch";
 import { postFetch } from "../../controller/postFetch";
 
 const errEmail = () => {};

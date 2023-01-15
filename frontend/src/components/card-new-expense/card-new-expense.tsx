@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./card-new-expense.css";
 
 import ButtonCross from "../buttonCross/buttonCross";
@@ -12,10 +12,7 @@ interface Props {
   money?: string;
   category?: string;
   onClickCross: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  onClickNewExpense: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  handleChangeTitle: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleChangePrice: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleChangeCategory: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onClickNewExpense: (state: any) => void;
 }
 
 const CardNewExpense: React.FC<Props> = ({
@@ -25,10 +22,19 @@ const CardNewExpense: React.FC<Props> = ({
   money = "",
   onClickCross,
   onClickNewExpense,
-  handleChangeTitle,
-  handleChangePrice,
-  handleChangeCategory,
 }) => {
+  const [state, setState] = useState({
+    name: "",
+    sum: "",
+    category_id: "",
+  });
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    key: keyof typeof state
+  ) => {
+    setState({ ...state, [key]: event.target.value });
+  };
   // function handleChangeCategory() {}
   // function handleChangePrice() {}
   // function handleChangeTitle() {}
@@ -40,16 +46,24 @@ const CardNewExpense: React.FC<Props> = ({
         <ButtonCross onClick={onClickCross} />
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Input onChange={handleChangeTitle} type="text" placeholder="Title" />
-        <Input onChange={handleChangePrice} type="text" placeholder="Price" />
         <Input
-          onChange={handleChangeCategory}
+          onChange={(event) => handleChange(event, "name")}
+          type="text"
+          placeholder="Title"
+        />
+        <Input
+          onChange={(event) => handleChange(event, "sum")}
+          type="text"
+          placeholder="Price"
+        />
+        <Input
+          onChange={(event) => handleChange(event, "category_id")}
           type="text"
           placeholder="Category"
         />
       </div>
       <div className="flex justify-end m-4">
-        <Button onClick={onClickNewExpense} name="New Expense" />
+        <Button onClick={() => onClickNewExpense(state)} name="New Expense" />
       </div>
     </div>
   );

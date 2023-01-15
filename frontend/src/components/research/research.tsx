@@ -26,7 +26,7 @@ const Research: React.FC<Props> = ({ onChange }) => {
           type="search"
           id="default-search"
           className="w-full mx-2 rounded-lg px-4"
-          placeholder="Search"
+          placeholder="Work in progress"
         ></input>
         <Button onClick={handleClickSearch} name="Search" />
       </div>

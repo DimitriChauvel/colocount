@@ -7,6 +7,7 @@ import Button from "../../components/button/button";
 import Input from "../../components/input/input";
 import AddImage from "../../components/addImage/addImage";
 import { postFetch } from "../../controller/postFetch";
+
 import { error } from "console";
 function CreateAccount() {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import "./Balance.css";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { findDOMNode } from "react-dom";
-
+import { postFetch } from "../../controller/postFetch";
 import Nav from "../../components/nav/nav";
 import CardMoney from "../../components/card-money/card-money";
 import CardExpense from "../../components/card-expense/card-expense";
@@ -13,6 +13,7 @@ import Select from "../../components/select/Select";
 import CardNewExpense from "../../components/card-new-expense/card-new-expense";
 import ButtonCross from "../../components/buttonCross/buttonCross";
 import CheckLog from "../../controller/log";
+import { getFetch } from "../../controller/getFetch";
 
 const Balance = () => {
   const navigate = useNavigate();
@@ -48,10 +49,18 @@ const Balance = () => {
   function handleChangeSearch() {}
   function handleClickSelect() {}
 
-  function onClickNewExpense() {}
-  function handleChangeTitle() {}
-  function handleChangePrice() {}
-  function handleChangeCategory() {}
+  async function onClickNewExpense(state: any) {
+    console.log(state);
+    var email = sessionStorage.getItem("user");
+    const data = await getFetch(`/users/email/${email}`);
+    // if ((await postFetch("/expense", state)) === false) {
+    //   console.log("Cancel");
+    // } else {
+    //   navigate("/homepage");
+    // }
+
+    // setExpense("");
+  }
 
   return (
     <div>
@@ -59,9 +68,9 @@ const Balance = () => {
         <CardNewExpense
           onClickCross={handleClickOnCross}
           onClickNewExpense={onClickNewExpense}
-          handleChangeTitle={handleChangeTitle}
-          handleChangePrice={handleChangePrice}
-          handleChangeCategory={handleChangeCategory}
+          // handleChangeTitle={handleChangeTitle}
+          // handleChangePrice={handleChangePrice}
+          // handleChangeCategory={handleChangeCategory}
         />
       </div>
       <div ref={ref}>

@@ -26,9 +26,7 @@ const Button: React.FC<Props> = ({ onClick, name = "Button" }) => {
       </button>
       {isOpen && (
         <div className="bg-orange flex flex-col rounded-lg mt-1 gap-1 p-2 absolute w-full">
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
+          <a href="#">Work in progress</a>
         </div>
       )}
     </div>
