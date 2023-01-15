@@ -31,33 +31,33 @@ class FlatshareManager extends BaseManager
     }
 
     public function postOne(): Flatshare {
-        $entityBody = json_decode(file_get_contents('php://input'), true);
+        $body = json_decode(file_get_contents('php://input'), true);
+        $uniqueId = uniqid('flatshare_');
         $query = $this->pdo->prepare(<<<EOT
-            INSERT INTO Flatshare (id, banner_picture, name, date_created) 
-            VALUES (:id, :banner_picture, :name, :date_created)
+            INSERT INTO Flatshare (id, banner_picture, name) 
+            VALUES (:id, :banner_picture, :name)
         EOT);
-        $query->bindValue(':id', $entityBody['id'], \PDO::PARAM_STR);
-        $query->bindValue(':banner_picture', $entityBody["banner_picture"], \PDO::PARAM_STR);
-        $query->bindValue(':name', $entityBody["name"], \PDO::PARAM_STR);
-        $query->bindValue(':date_created', $entityBody["date_created"], \PDO::PARAM_STR);
+        $query->bindValue(':id', $uniqueId, \PDO::PARAM_STR);
+        $query->bindValue(':banner_picture', $body["banner_picture"], \PDO::PARAM_STR);
+        $query->bindValue(':name', $body["name"], \PDO::PARAM_STR);
         $query->execute();
 
-        return new Flatshare($entityBody);
+        return $this->getOne($uniqueId);
     }
 
     public function putOne(): Flatshare {
-        $entityBody = json_decode(file_get_contents('php://input'), true);
+        $body = json_decode(file_get_contents('php://input'), true);
         $query = $this->pdo->prepare(<<<EOT
             UPDATE Flatshare 
             SET banner_picture = :banner_picture, name = :name, date_created = :date_created
             WHERE id = :id
         EOT);
-        $query->bindValue(':id', $entityBody['id'], \PDO::PARAM_STR);
-        $query->bindValue(':banner_picture', $entityBody["banner_picture"], \PDO::PARAM_STR);
-        $query->bindValue(':name', $entityBody["name"], \PDO::PARAM_STR);
-        $query->bindValue(':date_created', $entityBody["date_created"], \PDO::PARAM_STR);
+        $query->bindValue(':id', $body['id'], \PDO::PARAM_STR);
+        $query->bindValue(':banner_picture', $body["banner_picture"], \PDO::PARAM_STR);
+        $query->bindValue(':name', $body["name"], \PDO::PARAM_STR);
+        $query->bindValue(':date_created', $body["date_created"], \PDO::PARAM_STR);
         $query->execute();
 
-        return new Flatshare($entityBody);
+        return $this->getOne($body['id']);
     }
 }

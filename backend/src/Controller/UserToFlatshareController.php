@@ -8,35 +8,30 @@ use App\Route\Route;
 
 class UserToFlatshareController extends AbstractController
 {
-    #[Route('/userToFlateshare/flatshare/{id}', name: "get_one_userToFlatshare", methods: ["GET"])]
+    #[Route('/userToFlatshare/flatshare/{id}', name: "get_UserToFlatshare_by_flatshare_id", methods: ["GET"])]
     public function getByFlatshare(string $id) {
         $userToFlatshare = new UserToFlatshareManager(new PDOFactory());
         $data = $userToFlatshare->getByFlatshare($id);
         $this->renderJSON($data);
     }
 
-    #[Route('/userToFlateshare/user/{id}', name: "get_one_userToFlatshare", methods: ["GET"])]
+    #[Route('/UserToFlatshare/user/{id}', name: "get_UserToFlatshare_by_user_id", methods: ["GET"])]
     public function getByUser(string $id) {
         $userToFlatshare = new UserToFlatshareManager(new PDOFactory());
         $data = $userToFlatshare->getByUser($id);
         $this->renderJSON($data);
     }
 
-    #[Route('/userToFlateshare', name: "post_one_userToFlatshare", methods: ["POST"])]
-    public function postOneUserToFlatshare() {
+    #[Route('/UserToFlateshare', name: "post_one_UserToFlatshare", methods: ["POST"])]
+    public function postOneUserToUserToFlatshare() {
         $userToFlatShare = new UserToFlatshareManager(new PDOFactory());
         $data = $userToFlatShare->postOne();
         $this->renderJSON($data);
     }
 
-    #[Route('/userToFlatshare/{id}', name : "delete_one_userToFlatshare", methods: ["DELETE"])]
-    public function deleteOneFlatshare(string $id) {
+    #[Route('/UserToFlatshare/{id}', name: "delete_one_UserToFlatshare", methods: ["DELETE"])]
+    public function deleteOneUserToFlatshare(string $id) {
         $userToFlatshare = new UserToFlatshareManager(new PDOFactory());
         $userToFlatshare->deleteOne($id);
     }
-
-
-
-
-
 }
