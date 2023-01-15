@@ -6,6 +6,13 @@ use App\Model\Entity\UserToFlatshare;
 
 class UserToFlatshareManager extends BaseManager
 {
+    public function getOne(string $id): UserToFlatshare {
+        $query = $this->pdo->prepare('SELECT * FROM UserToFlatshare WHERE id = :id');
+        $query->bindValue(':id', $id, \PDO::PARAM_STR);
+        $query->execute();
+        $data = $query->fetch(\PDO::FETCH_ASSOC);
+        return new UserToFlatshare($data);
+    }
     public function getByFlatshare(string $id): array {
         $query = $this->pdo->prepare(<<<EOT
             SELECT *
@@ -28,6 +35,7 @@ class UserToFlatshareManager extends BaseManager
             WHERE user_id = :id
         EOT);
         $query->bindValue(':id', $id, \PDO::PARAM_STR);
+        $query->execute();
         $userToFlatshares = [];
         while ($data = $query->fetch(\PDO::FETCH_ASSOC)) {
             $userToFlatshares[] = new UserToFlatshare($data);
@@ -47,8 +55,7 @@ class UserToFlatshareManager extends BaseManager
         $query->bindValue(':user_id', $body['user_id'], \PDO::PARAM_STR);
         $query->bindValue('flatshare_id', $body['flatshare_id'], \PDO::PARAM_STR);
         $query->execute();
-
-        return new UserToFlatshare($body);
+        return $this->getOne($uniqueId);
     }
 
     public function deleteOne(string $id): void {

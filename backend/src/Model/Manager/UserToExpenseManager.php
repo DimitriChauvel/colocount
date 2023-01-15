@@ -64,7 +64,7 @@ class UserToExpenseManager extends BaseManager
         $query->bindValue(':due_amount', $body['due_amount'], \PDO::PARAM_STR);
         $query->execute();
 
-        return $this->getOne($this->pdo->lastInsertId());
+        return $this->getOne($uniqueId);
     }
 
     public function deleteOne(string $id): void

@@ -18,12 +18,13 @@ class CategoryManager extends BaseManager
 
     public function postOne(): Category {
         $body = json_decode(file_get_contents('php://input'), true);
+        $uniqueId = uniqid('category_');
         $query = $this->pdo->prepare('INSERT INTO Category (id, name) VALUES (:id, :name)');
-        $query->bindValue(':id', strtolower($body['name']), \PDO::PARAM_STR);
+        $query->bindValue(':id', $uniqueId, \PDO::PARAM_STR);
         $query->bindValue(':name', $body['name'], \PDO::PARAM_STR);
         $query->execute();
 
-        return $this->getOne($this->pdo->lastInsertId());
+        return $this->getOne($uniqueId);
     }
 
     public function deleteOne(string $id): void {

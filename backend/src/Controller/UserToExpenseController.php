@@ -14,7 +14,6 @@ class UserToExpenseController extends AbstractController {
         $userToExpenses = new UserToExpenseManager(new PDOFactory());
         $data = $userToExpenses->getOne($id);
 
-        header('Content-type: application/json');
         $this->renderJSON($data);
     }
 
@@ -23,7 +22,6 @@ class UserToExpenseController extends AbstractController {
         $userToExpenses = new UserToExpenseManager(new PDOFactory());
         $data = $userToExpenses->getByUserId($id);
 
-        header('Content-type: application/json');
         $this->renderJSON($data);
     }
 
@@ -32,7 +30,14 @@ class UserToExpenseController extends AbstractController {
         $userToExpenses = new UserToExpenseManager(new PDOFactory());
         $data = $userToExpenses->getByExpenseId($id);
 
-        header('Content-type: application/json');
+        $this->renderJSON($data);
+    }
+
+    #[Route('/user_to_expense', name: "post_one_user_to_expense", methods: ["POST"])]
+    public function postOneUserToExpense() {
+        $userToExpense = new UserToExpenseManager(new PDOFactory());
+        $data = $userToExpense->postOne();
+
         $this->renderJSON($data);
     }
 

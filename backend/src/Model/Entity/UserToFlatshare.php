@@ -7,8 +7,6 @@ class UserToFlatshare extends BaseEntity
     private string $id;
     private string $user_id;
     private string $flatshare_id;
-    private string $role;
-    private float $due;
 
     /**
      * @return string
@@ -64,41 +62,7 @@ class UserToFlatshare extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
 
-    /**
-     * @param string $role
-     * @return UserToFlatshare
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getDue()
-    {
-        return $this->due;
-    }
-
-    /**
-     * @param float $due
-     * @return UserToFlatshare
-     */
-    public function setDue($due)
-    {
-        $this->due = $due;
-        return $this;
-    }
 
 
 }
