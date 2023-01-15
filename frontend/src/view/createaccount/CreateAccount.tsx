@@ -32,7 +32,7 @@ function CreateAccount() {
   const handleClickImage = (event: React.MouseEvent<HTMLButtonElement>) => {};
 
   async function register() {
-    if ((await postFetch("http://localhost:1010/users", state)) === false) {
+    if ((await postFetch("/users", state)) === false) {
       setErr("Account already created or invalid");
     } else {
       sessionStorage.setItem("user", state.email);

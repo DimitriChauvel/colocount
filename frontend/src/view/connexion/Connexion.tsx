@@ -5,6 +5,7 @@ import "./Connexion.css";
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
 import { getFetch } from "../../controller/getFetch";
+import { postFetch } from "../../controller/postFetch";
 
 const errEmail = () => {};
 
@@ -13,8 +14,7 @@ const errPassword = () => {};
 function Login() {
   const navigate = useNavigate();
 
-  const [errEmail, seterrEmail] = useState<string | null>("");
-  const [errPassword, seterrPassword] = useState<string | null>("");
+  const [err, setErr] = useState<string | null>("");
 
   const [state, setState] = useState({
     email: "",
@@ -33,12 +33,8 @@ function Login() {
   };
 
   async function connect() {
-    const data = await getFetch("/users/email/" + state.email);
-    if (data === null) {
-      seterrEmail("Wrong Email");
-    } else if (state.password !== data.password) {
-      seterrEmail("");
-      seterrPassword("Wrong Password");
+    if ((await postFetch("/login", state)) === false) {
+      setErr("Wrong email or password");
     } else {
       sessionStorage.setItem("user", state.email);
       navigate("/homepage");
@@ -70,8 +66,7 @@ function Login() {
           <Button name="Sign in" onClick={connect} />
         </div>
         <div id="error" className="text-red-600">
-          {errEmail}
-          {errPassword}
+          {err}
         </div>
       </div>
     </div>

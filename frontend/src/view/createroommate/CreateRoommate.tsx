@@ -20,9 +20,6 @@ function CreateRoommate() {
     }
   }, []);
 
-  // const [title, setTitle] = useState("");
-  // const [inviteFlatshare, setInviteFlatshare] = useState("");
-
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     key: keyof typeof state
@@ -31,13 +28,13 @@ function CreateRoommate() {
   };
 
   const [state, setState] = useState({
-    title: "",
-    inviteFlatshare: "",
+    name: "",
+    banner_picture: "banner_picture",
   });
   let { method } = useParams();
 
   async function handleSubmit() {
-    if ((await postFetch("http://localhost:1010/flatshare", state)) === false) {
+    if ((await postFetch("/flatshare", state)) === false) {
     } else {
       navigate("/balance");
     }
@@ -51,18 +48,18 @@ function CreateRoommate() {
         <h1>Create flatshare</h1>
         <div className="flex flex-col gap-2">
           <Input
-            onChange={(event) => handleChange(event, "title")}
+            onChange={(event) => handleChange(event, "name")}
             placeholder="Title flatshare"
             type="text"
             required={true}
           />
-
+          {/* 
           <Input
             onChange={(event) => handleChange(event, "inviteFlatshare")}
             placeholder="Invite flatshare"
             type="text"
             required={true}
-          />
+          /> */}
         </div>
         <Button name="Create a flatshare" onClick={handleSubmit} />
       </div>
