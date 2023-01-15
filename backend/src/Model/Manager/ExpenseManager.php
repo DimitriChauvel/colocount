@@ -30,11 +30,12 @@ class ExpenseManager extends BaseManager
 
     public function getByUser(string $id): array {
         $query = $this->pdo->prepare(<<<EOT
-            SELECT *
-            FROM Expense
+            SELECT * 
+            FROM Expense 
             WHERE paying_one_id = :id
         EOT);
         $query->bindValue(':id', $id, \PDO::PARAM_STR);
+        $query->execute();
         $expenses = [];
         while ($data = $query->fetch(\PDO::FETCH_ASSOC)) {
             $expenses[] = new Expense($data);
@@ -61,13 +62,14 @@ class ExpenseManager extends BaseManager
         $uniqueId = uniqid('expense_');
         $query = $this->pdo->prepare(<<<EOT
             INSERT INTO Expense (id, name, paying_one_id, flatshare_id, sum, category_id)
-            VALUES (:id, name, :paying_one_id, :flatshare_id, :sum, :category_id)
+            VALUES (:id, :name, :paying_one_id, :flatshare_id, :sum, :category_id)
         EOT);
         $query->bindValue(':id', $uniqueId, \PDO::PARAM_STR);
-        $query->bindValue(':user_id', $body['user_id'], \PDO::PARAM_STR);
-        $query->bindValue('flatshare_id', $body['flatshare_id'], \PDO::PARAM_STR);
-        $query->bindValue('amount', $body['sum'], \PDO::PARAM_STR);
-        $query->bindValue('category_id', $body['category_id'], \PDO::PARAM_STR);
+        $query->bindValue(':name', $body['name'], \PDO::PARAM_STR);
+        $query->bindValue(':paying_one_id', $body['user_id'], \PDO::PARAM_STR);
+        $query->bindValue(':flatshare_id', $body['flatshare_id'], \PDO::PARAM_STR);
+        $query->bindValue(':sum', $body['sum'], \PDO::PARAM_STR);
+        $query->bindValue(':category_id', $body['category_id'], \PDO::PARAM_STR);
         $query->execute();
 
         return $this->getOne($uniqueId);

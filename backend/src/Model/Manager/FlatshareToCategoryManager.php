@@ -36,6 +36,7 @@ class FlatshareToCategoryManager extends BaseManager
             WHERE category_id = :id
         EOT);
         $query->bindValue(':id', $id, \PDO::PARAM_STR);
+        $query->execute();
         $flatshareToCategories = [];
         while ($data = $query->fetch(\PDO::FETCH_ASSOC)) {
             $flatshareToCategories[] = new FlatshareToCategory($data);
@@ -50,12 +51,11 @@ class FlatshareToCategoryManager extends BaseManager
             INSERT INTO FlatshareToCategory (id, flatshare_id, category_id)
             VALUES (:id, :flatshare_id, :category_id)
         EOT);
-        $query->bindValue(':id', $body['id'], \PDO::PARAM_STR);
+        $query->bindValue(':id', $uniqueId, \PDO::PARAM_STR);
         $query->bindValue(':flatshare_id', $body['flatshare_id'], \PDO::PARAM_STR);
         $query->bindValue(':category_id', $body['category_id'], \PDO::PARAM_STR);
         $query->execute();
-        $id = $this->pdo->lastInsertId();
-        return $this->getOne($id);
+        return $this->getOne($uniqueId);
     }
 
     public function deleteOne(string $id): void {
