@@ -12,6 +12,10 @@ interface Props {
   money?: string;
   category?: string;
   onClickCross: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClickNewExpense: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleChangeTitle: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangePrice: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeCategory: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const CardNewExpense: React.FC<Props> = ({
@@ -20,11 +24,15 @@ const CardNewExpense: React.FC<Props> = ({
   img = "",
   money = "",
   onClickCross,
+  onClickNewExpense,
+  handleChangeTitle,
+  handleChangePrice,
+  handleChangeCategory,
 }) => {
-  function handleChangeCategory() {}
-  function handleChangePrice() {}
-  function handleChangeTitle() {}
-  function handleClickNewExpense() {}
+  // function handleChangeCategory() {}
+  // function handleChangePrice() {}
+  // function handleChangeTitle() {}
+  //function handleClickNewExpense() {}
 
   return (
     <div className="absolute z-50 card-expense bg-blue h-2/3 w-2/3 rounded-lg flex flex-col justify-between">
@@ -41,7 +49,7 @@ const CardNewExpense: React.FC<Props> = ({
         />
       </div>
       <div className="flex justify-end m-4">
-        <Button onClick={handleClickNewExpense} name="New Expense" />
+        <Button onClick={onClickNewExpense} name="New Expense" />
       </div>
     </div>
   );
