@@ -32,7 +32,6 @@ function Login() {
   };
 
   function connect() {
-    //En cours Attente de l'API
     sessionStorage.setItem("user", state.email);
   }
 

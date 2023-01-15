@@ -39,10 +39,21 @@ const Balance = () => {
   function handleChangeSearch() {}
   function handleClickSelect() {}
 
+  function onClickNewExpense() {}
+  function handleChangeTitle() {}
+  function handleChangePrice() {}
+  function handleChangeCategory() {}
+
   return (
     <div>
       <div className={`${selectExpense === "open" ? "" : "hidden"} `}>
-        <CardNewExpense onClickCross={handleClickOnCross} />
+        <CardNewExpense
+          onClickCross={handleClickOnCross}
+          onClickNewExpense={onClickNewExpense}
+          handleChangeTitle={handleChangeTitle}
+          handleChangePrice={handleChangePrice}
+          handleChangeCategory={handleChangeCategory}
+        />
       </div>
       <div ref={ref}>
         <Nav />
