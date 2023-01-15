@@ -42,4 +42,11 @@ class UserController extends AbstractController
         $data = $users->putOne();
         $this->renderJSON($data);
     }
+
+    #[Route('/login', name: "login", methods: ["POST"])]
+    public function login() {
+        $users = new UserManager(new PDOFactory());
+        $data = $users->login();
+        $this->renderJSON($data);
+    }
 }

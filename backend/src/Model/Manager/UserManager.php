@@ -91,4 +91,20 @@ class UserManager extends BaseManager
 
         return $this->getOne($user->getId());
     }
+
+    public function login(): User
+    {
+        $body = json_decode(file_get_contents('php://input'), true);
+        $user = $this->getByEmail($body['email']);
+
+        if (!$user) {
+            throw new \Exception('User not found', 404);
+        }
+
+        if (!password_verify($body['password'], $user->getPassword())) {
+            throw new \Exception('Wrong password', 401);
+        }
+
+        return $user;
+    }
 }
