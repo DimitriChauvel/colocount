@@ -13,8 +13,8 @@ const errPassword = () => {};
 function Login() {
   const navigate = useNavigate();
 
-  const [errEmail, seterrEmail] = useState([]);
-  const [errPassword, seterrPassword] = useState([]);
+  const [errEmail, seterrEmail] = useState<string | null>("");
+  const [errPassword, seterrPassword] = useState<string | null>("");
 
   const [state, setState] = useState({
     email: "",
@@ -32,10 +32,17 @@ function Login() {
     navigate("/createaccount");
   };
 
-  function connect() {
-    const data = getFetch("/users");
-    console.log(data);
-    //sessionStorage.setItem("user", state.email);
+  async function connect() {
+    const data = await getFetch("/users/email/" + state.email);
+    if (data === null) {
+      seterrEmail("Wrong Email");
+    } else if (state.password !== data.password) {
+      seterrEmail("");
+      seterrPassword("Wrong Password");
+    } else {
+      sessionStorage.setItem("user", state.email);
+      navigate("/homepage");
+    }
   }
 
   return (
@@ -62,7 +69,7 @@ function Login() {
         <div>
           <Button name="Sign in" onClick={connect} />
         </div>
-        <div id="error">
+        <div id="error" className="text-red-600">
           {errEmail}
           {errPassword}
         </div>

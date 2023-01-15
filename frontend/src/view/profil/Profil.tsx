@@ -1,20 +1,28 @@
 import React from "react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Nav from "../../components/nav/nav";
 import Input from "../../components/input/input";
 import Button from "../../components/button/button";
 import CardInfoProfil from "../../components/card-info-profil/CardInfoProfil";
-import ToHome from '../../components/nav/nav'
+import ToHome from "../../components/nav/nav";
+import CheckLog from "../../controller/log";
 
 const Profil = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (CheckLog() === false) {
+      navigate("/connexion");
+    }
+  }, []);
+
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   let { method } = useParams();
-
 
   let modifyAccount = async (e: any) => {
     e.preventDefault();
@@ -30,8 +38,8 @@ const Profil = () => {
         }),
       });
       let resJson = await res.json();
-      if (res.status === 200 && method === 'POST') {
-        ToHome()
+      if (res.status === 200 && method === "POST") {
+        ToHome();
         console.log("User created successfully");
       } else {
         console.log("Some error occured");
@@ -46,11 +54,9 @@ const Profil = () => {
       <Nav />
 
       <div className="flex gap-4 container-register justify-center">
-
         <div className="flex">
-          <CardInfoProfil/>
+          <CardInfoProfil />
         </div>
-
 
         <div className="m-4">
           <form onSubmit={modifyAccount}>

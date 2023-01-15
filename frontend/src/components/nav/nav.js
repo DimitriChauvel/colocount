@@ -14,7 +14,7 @@ function Nav(props) {
     navigate("/");
   }
   const toLogout = () => {
-    //sessionStorage.removeItem("user");
+    sessionStorage.removeItem("user");
     navigate("/Connexion");
   };
   return (
