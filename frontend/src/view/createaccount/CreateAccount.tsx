@@ -17,15 +17,14 @@ function CreateAccount() {
     lastname: "",
   });
 
-  const postData = async(url: string, data: any) => {
-        const response = await fetch(url, {
-            method: 'POST', 
-            body: JSON.stringify(data)
-        });
-        const json = await response.json();
-        return json;
-};
-
+  const postData = async (url: string, data: any) => {
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    const json = await response.json();
+    return json;
+  };
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -37,28 +36,23 @@ function CreateAccount() {
   const handleClickLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
     navigate("/connexion");
   };
-  const handleClickImage = (event: React.MouseEvent<HTMLButtonElement>) => {
-
-  }
+  const handleClickImage = (event: React.MouseEvent<HTMLButtonElement>) => {};
 
   function register() {
-    postData('http://localhost:1010/users', state)
+    postData("http://localhost:1010/users", state);
     sessionStorage.setItem("user", state.email);
   }
 
   return (
     <div>
-
       {" "}
       <div className="flex justify-end m-4">
-
         <Button name="Login" onClick={handleClickLogin} />
       </div>
       <div className="flex flex-col gap-4 items-center container-register">
         <h1>Register</h1>
         <div className="flex flex-col gap-2 items-center">
-          <AddImage onClick={handleClickImage}
-          />
+          <AddImage onClick={handleClickImage} />
           <Input
             onChange={(event) => handleChange(event, "firstname")}
             placeholder="First Name"

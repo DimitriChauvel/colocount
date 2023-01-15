@@ -4,6 +4,7 @@ import "./Connexion.css";
 
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
+import { getFetch } from "../../controller/getFetch";
 
 const errEmail = () => {};
 
@@ -32,7 +33,9 @@ function Login() {
   };
 
   function connect() {
-    sessionStorage.setItem("user", state.email);
+    const data = getFetch("/users");
+    console.log(data);
+    //sessionStorage.setItem("user", state.email);
   }
 
   return (
