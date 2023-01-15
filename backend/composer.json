@@ -1,0 +1,17 @@
+{
+    "name": "colocount/app",
+    "authors": [
+        {
+            "name": "juroche42",
+            "email": "94986757+juroche42@users.noreply.github.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {
+      "ext-pdo": "*"
+    }
+}
