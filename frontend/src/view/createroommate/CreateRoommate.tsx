@@ -9,7 +9,9 @@ import ToHome from "../../components/nav/nav";
 import { useNavigate } from "react-router-dom";
 import CheckLog from "../../controller/log";
 
-const CreateRoommate = () => {
+import { postFetch } from "../../controller/postFetch";
+
+function CreateRoommate() {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,36 +20,28 @@ const CreateRoommate = () => {
     }
   }, []);
 
-  const [title, setTitle] = useState("");
-  const [inviteFlatshare, setInviteFlatshare] = useState("");
+  // const [title, setTitle] = useState("");
+  // const [inviteFlatshare, setInviteFlatshare] = useState("");
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    key: keyof typeof state
+  ) => {
+    setState({ ...state, [key]: event.target.value });
+  };
+
+  const [state, setState] = useState({
+    title: "",
+    inviteFlatshare: "",
+  });
   let { method } = useParams();
 
-  let handleSubmit = async (e: any) => {
-    e.preventDefault();
-    try {
-      let res = await fetch("", {
-        method: "POST",
-        body: JSON.stringify({
-          title: title,
-          inviteFlatshare: inviteFlatshare,
-        }),
-      });
-
-      let resJson = await res.json();
-
-      if (res.status === 200 && method === "POST") {
-        ToHome();
-        setTitle("");
-        setInviteFlatshare("");
-
-        console.log("flatshare created successfully");
-      } else {
-        console.log("Some error occured");
-      }
-    } catch (err) {
-      console.log(err);
+  async function handleSubmit() {
+    if ((await postFetch("http://localhost:1010/flatshare", state)) === false) {
+    } else {
+      navigate("/balance");
     }
-  };
+  }
 
   return (
     <div>
@@ -57,14 +51,14 @@ const CreateRoommate = () => {
         <h1>Create flatshare</h1>
         <div className="flex flex-col gap-2">
           <Input
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(event) => handleChange(event, "title")}
             placeholder="Title flatshare"
             type="text"
             required={true}
           />
 
           <Input
-            onChange={(e) => setInviteFlatshare(e.target.value)}
+            onChange={(event) => handleChange(event, "inviteFlatshare")}
             placeholder="Invite flatshare"
             type="text"
             required={true}
@@ -74,6 +68,6 @@ const CreateRoommate = () => {
       </div>
     </div>
   );
-};
+}
 
 export default CreateRoommate;
