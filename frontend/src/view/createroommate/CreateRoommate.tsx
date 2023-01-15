@@ -1,12 +1,23 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Nav from "../../components/nav/nav";
 import Input from "../../components/input/input";
 import Button from "../../components/button/button";
-import ToHome from '../../components/nav/nav'
+import ToHome from "../../components/nav/nav";
+
+import { useNavigate } from "react-router-dom";
+import CheckLog from "../../controller/log";
 
 const CreateRoommate = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (CheckLog() === false) {
+      navigate("/connexion");
+    }
+  }, []);
+
   const [title, setTitle] = useState("");
   const [inviteFlatshare, setInviteFlatshare] = useState("");
   let { method } = useParams();
@@ -18,14 +29,14 @@ const CreateRoommate = () => {
         method: "POST",
         body: JSON.stringify({
           title: title,
-          inviteFlatshare : inviteFlatshare
+          inviteFlatshare: inviteFlatshare,
         }),
       });
 
       let resJson = await res.json();
 
-      if (res.status === 200 && method === 'POST') {
-        ToHome()
+      if (res.status === 200 && method === "POST") {
+        ToHome();
         setTitle("");
         setInviteFlatshare("");
 
@@ -37,7 +48,6 @@ const CreateRoommate = () => {
       console.log(err);
     }
   };
-
 
   return (
     <div>

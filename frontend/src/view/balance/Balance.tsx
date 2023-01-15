@@ -12,8 +12,17 @@ import Research from "../../components/research/research";
 import Select from "../../components/select/Select";
 import CardNewExpense from "../../components/card-new-expense/card-new-expense";
 import ButtonCross from "../../components/buttonCross/buttonCross";
+import CheckLog from "../../controller/log";
 
 const Balance = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (CheckLog() === false) {
+      navigate("/connexion");
+    }
+  }, []);
+
   const [selectedTab, setSelectedTab] = useState<string | null>("balance");
   const [selectExpense, setExpense] = useState<string | null>("");
   const ref = useRef(null);

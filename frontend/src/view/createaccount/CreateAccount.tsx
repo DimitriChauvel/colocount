@@ -6,9 +6,11 @@ import "./CreateAccount.css";
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
 import AddImage from "../../components/addImage/addImage";
-
+import { postFetch } from "../../controller/postFetch";
+import { error } from "console";
 function CreateAccount() {
   const navigate = useNavigate();
+  const [err, setErr] = useState<string | null>("");
 
   const [state, setState] = useState({
     email: "",
@@ -16,16 +18,6 @@ function CreateAccount() {
     firstname: "",
     lastname: "",
   });
-
-  const postData = async(url: string, data: any) => {
-        const response = await fetch(url, {
-            method: 'POST', 
-            body: JSON.stringify(data)
-        });
-        const json = await response.json();
-        return json;
-};
-
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -37,28 +29,26 @@ function CreateAccount() {
   const handleClickLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
     navigate("/connexion");
   };
-  const handleClickImage = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickImage = (event: React.MouseEvent<HTMLButtonElement>) => {};
 
-  }
-
-  function register() {
-    postData('http://localhost:1010/users', state)
-    sessionStorage.setItem("user", state.email);
+  async function register() {
+    if ((await postFetch("http://localhost:1010/users", state)) === false) {
+      setErr("Account already created or invalid");
+    } else {
+      sessionStorage.setItem("user", state.email);
+      navigate("/homepage");
+    }
   }
 
   return (
     <div>
-
-      {" "}
       <div className="flex justify-end m-4">
-
         <Button name="Login" onClick={handleClickLogin} />
       </div>
       <div className="flex flex-col gap-4 items-center container-register">
         <h1>Register</h1>
         <div className="flex flex-col gap-2 items-center">
-          <AddImage onClick={handleClickImage}
-          />
+          <AddImage onClick={handleClickImage} />
           <Input
             onChange={(event) => handleChange(event, "firstname")}
             placeholder="First Name"
@@ -88,6 +78,9 @@ function CreateAccount() {
 
         <div>
           <Button name="Register" onClick={register} />
+        </div>
+        <div id="error" className="text-red-600">
+          {err}
         </div>
       </div>
     </div>
