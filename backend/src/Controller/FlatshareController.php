@@ -14,7 +14,7 @@ class FlatshareController extends AbstractController
         $data = $flatshares->getAll();
 
         header('Content-type: application/json');
-        echo json_encode($data);
+        $this->renderJSON($data);
     }
 
     #[Route('/flatshare/id/{id}', name: "get_one_flatshare", methods: ["GET"])]
@@ -23,7 +23,7 @@ class FlatshareController extends AbstractController
         $data = $flatshares->getOne($id);
 
         header('Content-type: application/json');
-        echo json_encode($data);
+        $this->renderJSON($data);
     }
 
     #[Route('/flatshare', name: "post_one_flatshare", methods: ["POST"])]
@@ -32,7 +32,7 @@ class FlatshareController extends AbstractController
         $data = $flatshares->postOne();
 
         header('Content-type: application/json');
-        echo json_encode($data);
+        $this->renderJSON($data);
     }
 
     #[Route('/flatshare', name: "put_one_flatshare", methods: ["PUT"])]
@@ -41,7 +41,7 @@ class FlatshareController extends AbstractController
         $data = $flatshares->putOne();
 
         header('Content-type: application/json');
-        echo json_encode($data);
+        $this->renderJSON($data);
     }
 
     #[Route('/flatshare/id/{id}', name: "delete_one_flatshare", methods: ["DELETE"])]

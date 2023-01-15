@@ -10,7 +10,7 @@ class UserToFlatshareManager extends BaseManager
         $query = $this->pdo->prepare(<<<EOT
             SELECT *
             FROM UserToFlatshare 
-            WHERE flastshare_id = :id
+            WHERE flatshare_id = :id
         EOT);
         $query->bindValue(':id', $id, \PDO::PARAM_STR);
         $query->execute();
@@ -25,7 +25,7 @@ class UserToFlatshareManager extends BaseManager
         $query = $this->pdo->prepare(<<<EOT
             SELECT *
             FROM UserToFlatshare
-            WHERE user_id : :id
+            WHERE user_id = :id
         EOT);
         $query->bindValue(':id', $id, \PDO::PARAM_STR);
         $userToFlatshares = [];
@@ -37,18 +37,18 @@ class UserToFlatshareManager extends BaseManager
 
 
     public function postOne(): UserToFlatshare {
-        $entityBody = json_decode(file_get_contents('php://input'), true);
-        $id = uniqid('userToFlatshare_');
+        $body = json_decode(file_get_contents('php://input'), true);
+        $uniqueId = uniqid('UserToFlatshare_');
         $query = $this->pdo->prepare(<<<EOT
-            INSERT INTO userToFlatshare (id, user_id, flatshare_id)
+            INSERT INTO UserToFlatshare (id, user_id, flatshare_id)
             VALUES (:id, :user_id, :flatshare_id)
         EOT);
-        $query->bindValue(':id', $id, \PDO::PARAM_STR);
-        $query->bindValue(':user_id', $entityBody['user_id'], \PDO::PARAM_STR);
-        $query->bindValue('flatshare_id', $entityBody['flatshare_id'], \PDO::PARAM_STR);
+        $query->bindValue(':id', $uniqueId, \PDO::PARAM_STR);
+        $query->bindValue(':user_id', $body['user_id'], \PDO::PARAM_STR);
+        $query->bindValue('flatshare_id', $body['flatshare_id'], \PDO::PARAM_STR);
         $query->execute();
 
-        return new UserToFlatshare($entityBody);
+        return new UserToFlatshare($body);
     }
 
     public function deleteOne(string $id): void {
