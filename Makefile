@@ -2,10 +2,8 @@ hello:
 	echo Hello World !
 
 dev.init:
-	cd backend; \
- 		composer dump-autoload;
-	cd frontend; \
-		npm install;
+	cd backend && composer dump-autoload
+	cd frontend && npm install
 
 dev.up:
 	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
