@@ -6,6 +6,7 @@ use App\Model\Factory\PDOFactory;
 use App\Route\Route;
 use App\Model\Manager\UserManager;
 use App\Services\JWTHelper;
+use App\Model\Entity\User;
 
 class UserController extends AbstractController
 {
@@ -66,5 +67,32 @@ class UserController extends AbstractController
             $this->renderJSON(['error' => 'Invalid email or password'], 400);
             die();
         }
+    }
+
+    #[Route('/signup', name: "signup", methods: ["POST"])]
+    public function signup() {
+        $response = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($response['email']) || !isset($response['password']) || !isset($response['firstname']) || !isset($response['lastname']) ) {
+            $this->renderJSON(['error' => 'Missing field'], 400);
+            die();
+        }
+        $email = $response['email'];
+        $password = $response['password'];
+        $firstname = $response['firstname'];
+        $lastname = $response['lastname'];
+
+        $users = new UserManager(new PDOFactory());
+        $user = $users->getByEmail($email);
+        if ($user) {
+            $this->renderJSON(['error' => 'Email already in use'], 400);
+            die();
+        }
+        $user = new User($response);
+        $user = $users->postOne($email, $password);
+        $jwt = JWTHelper::buildJWT($user);
+        $this->renderJSON(['token' => $jwt]);
+        http_response_code(201);
+        die();
     }
 }
