@@ -12,8 +12,7 @@ namespace App\Services;
         {
             $payload = [
                 "email" => $user->getEmail(),
-                "uuid" => $user->getUuid(),
-                "pseudo" => $user->getPseudo(),
+                "id" => $user->getId(),
                 "exp" => (new \DateTime("+ 30 days"))->getTimestamp()
             ];
 

@@ -50,6 +50,7 @@ class UserController extends AbstractController
 
         if (!isset($response['email']) || !isset($response['password'])) {
             $this->renderJSON(['error' => 'Missing email or password'], 400);
+            die();
         }
         $email = $response['email'];
         $password = $response['password'];
@@ -57,9 +58,13 @@ class UserController extends AbstractController
         $users = new UserManager(new PDOFactory());
         $user = $users->getByEmail($email);
         if ($user && $user->verifyPassword($password)) {
-            $this->renderJSON(['message' => 'Login successful']);
+            $jwt = JWTHelper::buildJWT($user);
+            $this->renderJSON(['token' => $jwt]);
+            http_response_code(200);
+            die();
         } else {
             $this->renderJSON(['error' => 'Invalid email or password'], 400);
+            die();
         }
     }
 }
