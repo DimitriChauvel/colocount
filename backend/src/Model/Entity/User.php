@@ -150,7 +150,13 @@ class User extends BaseEntity
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        $pwd = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $pwd;
         return $this;
+    }
+
+    public function verifyPassword(string $password): bool
+    {
+        return password_verify($password, $this->password);
     }
 }

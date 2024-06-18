@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Model\Factory\PDOFactory;
 use App\Route\Route;
 use App\Model\Manager\UserManager;
+use App\Services\JWTHelper;
 
 class UserController extends AbstractController
 {
@@ -45,8 +46,25 @@ class UserController extends AbstractController
 
     #[Route('/login', name: "login", methods: ["POST"])]
     public function login() {
+        $response = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($response['email']) || !isset($response['password'])) {
+            $this->renderJSON(['error' => 'Missing email or password'], 400);
+            die();
+        }
+        $email = $response['email'];
+        $password = $response['password'];
+
         $users = new UserManager(new PDOFactory());
-        $data = $users->login();
-        $this->renderJSON($data);
+        $user = $users->getByEmail($email);
+        if ($user && $user->verifyPassword($password)) {
+            $jwt = JWTHelper::buildJWT($user);
+            $this->renderJSON(['token' => $jwt]);
+            http_response_code(200);
+            die();
+        } else {
+            $this->renderJSON(['error' => 'Invalid email or password'], 400);
+            die();
+        }
     }
 }

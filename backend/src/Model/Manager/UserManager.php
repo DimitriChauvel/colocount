@@ -95,6 +95,13 @@ class UserManager extends BaseManager
     public function login(): User
     {
         $body = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($body['email']) || !isset($body['password'])) {
+            throw new \Exception('Missing email or password', 400);
+        }
+        $email = $body['email'];
+        $password = $body['password'];
+
         $user = $this->getByEmail($body['email']);
 
         if (!$user) {

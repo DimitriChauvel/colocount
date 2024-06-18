@@ -83,3 +83,6 @@ ALTER TABLE FlatshareToCategory ADD CONSTRAINT FlatshareToCategory_fk1 FOREIGN K
 ALTER TABLE UserToExpense ADD CONSTRAINT UserToExpense_fk0 FOREIGN KEY (user_id) REFERENCES Users(id);
 
 ALTER TABLE UserToExpense ADD CONSTRAINT UserToExpense_fk1 FOREIGN KEY (expense_id) REFERENCES Expense(id);
+
+
+INSERT INTO Users (id, firstname, lastname, email, password) VALUES ('1', 'Max', 'Mustermann', 'julesro42@gmail.com', 'password123');
