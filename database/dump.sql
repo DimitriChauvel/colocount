@@ -86,3 +86,7 @@ ALTER TABLE UserToExpense ADD CONSTRAINT UserToExpense_fk1 FOREIGN KEY (expense_
 
 
 INSERT INTO Users (id, firstname, lastname, email, password) VALUES ('1', 'Max', 'Mustermann', 'julesro42@gmail.com', 'password123');
+
+INSERT INTO Flatshare (id, name) VALUES ('1', 'Wohnung 1');
+
+INSERT INTO UserToFlatshare (id, user_id, flatshare_id) VALUES ('1', '1', '1');
