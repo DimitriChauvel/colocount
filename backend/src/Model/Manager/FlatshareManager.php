@@ -6,8 +6,28 @@ use App\Model\Entity\Flatshare;
 
 class FlatshareManager extends BaseManager
 {
+
+    public function getAllFlatsharesByUser(string $userId): ?array
+    {
+        $query = $this->pdo->prepare(
+            'SELECT f.id, f.banner_picture, f.name, f.date_created
+             FROM Flatshare f 
+                JOIN UserToFlatshare utf ON f.id = utf.flatshare_id 
+             WHERE utf.user_id = :userId
+             ORDER BY f.date_created DESC'
+        );
+        $query->bindValue(':userId', $userId, \PDO::PARAM_STR);
+        $query->execute();
+        $flatshares = [];
+        while ($data = $query->fetch(\PDO::FETCH_ASSOC)) {
+            $flatshares[] = new Flatshare($data);
+        }
+        return $flatshares;
+    }
+
+
     public function getAll(): array {
-        $query = $this->pdo->query('SELECT * FROM Flatshare');
+        $query = $this->pdo->query('SELECT * FROM Flatshare ORDER BY date_created DESC');
         $flatshares = [];
         while ($data = $query->fetch(\PDO::FETCH_ASSOC)) {
             $flatshares[] = new Flatshare($data);

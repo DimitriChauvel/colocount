@@ -54,4 +54,22 @@ class FlatshareController extends AbstractController
         $flatshares = new FlatshareManager(new PDOFactory());
         $flatshares->deleteOne($id);
     }
+
+    #[Route('/homepage', name: "homepage", methods: ["GET"])]
+    public function homepage() {
+        $currentUser = $this->checkJwtAndGetUser();
+        $flatshareManager = new FlatshareManager(new PDOFactory());
+        $flatshares = $flatshareManager->getAllFlatsharesByUser($currentUser);
+        if (empty($flatshares)) {
+            $this->renderJSON([
+                'message' => 'No flatshare'
+            ]);
+            die();
+        }
+        $this->renderJSON([
+            'flashares' => $flatshares
+        ]);
+        http_response_code(200);
+        die();
+    }
 }
