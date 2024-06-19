@@ -59,10 +59,15 @@ class FlatshareController extends AbstractController
     public function homepage() {
         $currentUser = $this->checkJwtAndGetUser();
         $flatshareManager = new FlatshareManager(new PDOFactory());
-        $data = $flatshareManager->getAllFlatsharesByUser($currentUser);
-        header('Content-type: application/json');
+        $flatshares = $flatshareManager->getAllFlatsharesByUser($currentUser);
+        if (empty($flatshares)) {
+            $this->renderJSON([
+                'message' => 'No flatshare'
+            ]);
+            die();
+        }
         $this->renderJSON([
-            'flashares' => $data
+            'flashares' => $flatshares
         ]);
         http_response_code(200);
         die();
