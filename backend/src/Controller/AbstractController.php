@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Services\JWTHelper;
 
 abstract class AbstractController
 {
@@ -79,6 +80,24 @@ abstract class AbstractController
 
             mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
         );
+    }
+
+    public function checkJwtAndGetUser()
+    {
+        if (isset(getallheaders()['authorization'])) {
+            $auth = (getallheaders()['authorization']);           
+        } elseif (isset(getallheaders()['Authorization'])) {
+            $auth = (getallheaders()['Authorization']);
+        }
+        $cred = str_replace("Bearer ", "", $auth);
+        $token = JWTHelper::decodeJWT($cred);
+        if (!$token) {
+            $this->renderJSON([
+                "message" => "invalid cred"
+            ]);
+            die;
+        }
+        return $token->id;
     }
 
     public function renderJSON($content)

@@ -55,8 +55,11 @@ class FlatshareController extends AbstractController
         $flatshares->deleteOne($id);
     }
 
-    #[Route('/homePage', name: "homepage", methods: ["GET"])]
+    #[Route('/homepage', name: "homepage", methods: ["GET"])]
     public function homepage() {
+        $currentUser = $this->checkJwtAndGetUser();
+        
+        //var_dump($currentUser);
         $flatshares = new FlatshareManager(new PDOFactory());
         $data = $flatshares->getAll();
 
