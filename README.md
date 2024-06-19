@@ -7,7 +7,7 @@ git clone https://github.com/Hundraw/colocount.git
 ```
 ### Development
 ___
-- Install dependencies : `make dev.install`
+- Install dependencies : `make dev.init`
 - Run the development server: 
   - `make dev.up`
   - `make sudo.dev.up` if you have permission issues.
