@@ -58,12 +58,13 @@ class FlatshareController extends AbstractController
     #[Route('/homepage', name: "homepage", methods: ["GET"])]
     public function homepage() {
         $currentUser = $this->checkJwtAndGetUser();
-        
-        //var_dump($currentUser);
-        $flatshares = new FlatshareManager(new PDOFactory());
-        $data = $flatshares->getAll();
-
+        $flatshareManager = new FlatshareManager(new PDOFactory());
+        $data = $flatshareManager->getAllFlatsharesByUser($currentUser);
         header('Content-type: application/json');
-        $this->renderJSON($data);
+        $this->renderJSON([
+            'flashares' => $data
+        ]);
+        http_response_code(200);
+        die();
     }
 }
