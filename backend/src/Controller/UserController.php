@@ -99,8 +99,8 @@ class UserController extends AbstractController
     #[Route('/profil', name: "profil", methods: ["GET"])]
     public function profil() {
         $userId = $this->checkJwtAndGetUser();
-        $users = new UserManager(new PDOFactory());
-        $user = $users->getOne($userId);
+        $userManager = new UserManager(new PDOFactory());
+        $user = $userManager->getOne($userId);
         if (!$user) {
             $this->renderJSON(['error' => 'User not found'], 404);
             die();
