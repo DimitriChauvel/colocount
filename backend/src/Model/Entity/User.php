@@ -11,7 +11,7 @@ class User extends BaseEntity
     private ?string $profile_picture;
     private string $password;
     private string $date_created;
-
+    
     /**
      * @return string
      */
