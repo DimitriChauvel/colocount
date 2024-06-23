@@ -56,8 +56,8 @@ class UserController extends AbstractController
         $email = $response['email'];
         $password = $response['password'];
 
-        $users = new UserManager(new PDOFactory());
-        $user = $users->getByEmail($email);
+        $userManager = new UserManager(new PDOFactory());
+        $user = $userManager->getByEmail($email);
         if ($user && $user->verifyPassword($password)) {
             $jwt = JWTHelper::buildJWT($user);
             $this->renderJSON(['token' => $jwt]);
@@ -82,17 +82,70 @@ class UserController extends AbstractController
         $firstname = $response['firstname'];
         $lastname = $response['lastname'];
 
-        $users = new UserManager(new PDOFactory());
-        $user = $users->getByEmail($email);
+        $userManager = new UserManager(new PDOFactory());
+        $user = $userManager->getByEmail($email);
         if ($user) {
             $this->renderJSON(['error' => 'Email already in use'], 400);
             die();
         }
         $user = new User($response);
-        $user = $users->postOne($email, $password);
+        $user = $userManager->postOne($email, $password);
         $jwt = JWTHelper::buildJWT($user);
         $this->renderJSON(['token' => $jwt]);
         http_response_code(201);
+        die();
+    }
+
+    #[Route('/profil', name: "profil", methods: ["GET"])]
+    public function profil() {
+        $userId = $this->checkJwtAndGetUser();
+        $userManager = new UserManager(new PDOFactory());
+        $user = $userManager->getOne($userId);
+        if (!$user) {
+            $this->renderJSON(['error' => 'User not found'], 404);
+            die();
+        }
+        $this->renderJSON($user);
+        die();
+    }
+
+    #[Route('/profil', name: "update_profil", methods: ["PUT"])]
+    public function updateProfil() {
+        $response = json_decode(file_get_contents('php://input'), true);
+        
+        $userId = $this->checkJwtAndGetUser();
+        $userManager = new UserManager(new PDOFactory());
+        $user = $userManager->getOne($userId);
+        if (!$user) {
+            $this->renderJSON(['error' => 'User not found'], 404);
+            die();
+        }
+        if (isset($response['email'])) {
+            $email = $response['email'];
+            if ($userManager->getByEmail($email)) {
+                $this->renderJSON(['error' => 'Email already in use'], 400);
+                die();
+            }
+            $user->setEmail($email);
+        }
+        if (isset($response['oldPassword']) && isset($response['newPassword'])) {
+            $oldPassword = $response['oldPassword'];
+            $newPassword = $response['newPassword'];
+            if (!$user->verifyPassword($oldPassword)) {
+                $this->renderJSON(['error' => 'Invalid password'], 400);
+                die();
+            }
+            $user->setPassword($newPassword);
+        }
+        if (isset($response['firstname']))
+            $user->setFirstname($response['firstname']);
+        if (isset($response['lastname']))
+            $user->setLastname($response['lastname']);
+        if (isset($response['phone']))
+            $user->setPhone($response['phone']);
+
+        $userManager->putOne($user);
+        $this->renderJSON(['message' => 'User updated']);
         die();
     }
 }

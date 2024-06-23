@@ -52,10 +52,9 @@ class UserManager extends BaseManager
         return $this->getOne($uniqueId);
     }
 
-    public function putOne(): User
+    public function putOne(User $user): User
     {
-        $body = json_decode(file_get_contents('php://input'), true);
-        $user = new User($body);
+    
 
         $query = $this->pdo->prepare(<<<EOT
             UPDATE Users 
