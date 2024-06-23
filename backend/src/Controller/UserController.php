@@ -56,8 +56,8 @@ class UserController extends AbstractController
         $email = $response['email'];
         $password = $response['password'];
 
-        $users = new UserManager(new PDOFactory());
-        $user = $users->getByEmail($email);
+        $userManager = new UserManager(new PDOFactory());
+        $user = $userManager->getByEmail($email);
         if ($user && $user->verifyPassword($password)) {
             $jwt = JWTHelper::buildJWT($user);
             $this->renderJSON(['token' => $jwt]);
@@ -82,17 +82,30 @@ class UserController extends AbstractController
         $firstname = $response['firstname'];
         $lastname = $response['lastname'];
 
-        $users = new UserManager(new PDOFactory());
-        $user = $users->getByEmail($email);
+        $userManager = new UserManager(new PDOFactory());
+        $user = $userManager->getByEmail($email);
         if ($user) {
             $this->renderJSON(['error' => 'Email already in use'], 400);
             die();
         }
         $user = new User($response);
-        $user = $users->postOne($email, $password);
+        $user = $userManager->postOne($email, $password);
         $jwt = JWTHelper::buildJWT($user);
         $this->renderJSON(['token' => $jwt]);
         http_response_code(201);
+        die();
+    }
+
+    #[Route('/profil', name: "profil", methods: ["GET"])]
+    public function profil() {
+        $userId = $this->checkJwtAndGetUser();
+        $users = new UserManager(new PDOFactory());
+        $user = $users->getOne($userId);
+        if (!$user) {
+            $this->renderJSON(['error' => 'User not found'], 404);
+            die();
+        }
+        $this->renderJSON($user);
         die();
     }
 }
