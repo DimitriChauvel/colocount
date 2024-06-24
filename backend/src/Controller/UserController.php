@@ -17,34 +17,6 @@ class UserController extends AbstractController
         $this->renderJSON($data);
     }
 
-    #[Route('/users/id/{id}', name: "get_one_user", methods: ["GET"])]
-    public function getOneUser(string $id) {
-        $users = new UserManager(new PDOFactory());
-        $data = $users->getOne($id);
-        $this->renderJSON($data);
-    }
-
-    #[Route('/users/email/{email}', name: "get_user_by_email", methods: ["GET"])]
-    public function getUserByEmail(string $email) {
-        $users = new UserManager(new PDOFactory());
-        $data = $users->getByEmail($email);
-        $this->renderJSON($data);
-    }
-
-    #[Route('/users', name: "post_one_user", methods: ["POST"])]
-    public function postOneUser() {
-        $users = new UserManager(new PDOFactory());
-        $data = $users->postOne();
-        $this->renderJSON($data);
-    }
-
-    #[Route('/users', name: "put_one_user", methods: ["PUT"])]
-    public function putOneUser() {
-        $users = new UserManager(new PDOFactory());
-        $data = $users->putOne();
-        $this->renderJSON($data);
-    }
-
     #[Route('/login', name: "login", methods: ["POST"])]
     public function login() {
         $response = json_decode(file_get_contents('php://input'), true);
@@ -79,9 +51,6 @@ class UserController extends AbstractController
         }
         $email = $response['email'];
         $password = $response['password'];
-        $firstname = $response['firstname'];
-        $lastname = $response['lastname'];
-
         $userManager = new UserManager(new PDOFactory());
         $user = $userManager->getByEmail($email);
         if ($user) {
@@ -89,7 +58,7 @@ class UserController extends AbstractController
             die();
         }
         $user = new User($response);
-        $user = $userManager->postOne($email, $password);
+        $user = $userManager->postOne($user);
         $jwt = JWTHelper::buildJWT($user);
         $this->renderJSON(['token' => $jwt]);
         http_response_code(201);
