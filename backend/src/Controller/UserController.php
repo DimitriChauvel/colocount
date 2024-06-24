@@ -51,9 +51,6 @@ class UserController extends AbstractController
         }
         $email = $response['email'];
         $password = $response['password'];
-        $firstname = $response['firstname'];
-        $lastname = $response['lastname'];
-
         $userManager = new UserManager(new PDOFactory());
         $user = $userManager->getByEmail($email);
         if ($user) {
@@ -61,7 +58,7 @@ class UserController extends AbstractController
             die();
         }
         $user = new User($response);
-        $user = $userManager->postOne($email, $password);
+        $user = $userManager->postOne($user);
         $jwt = JWTHelper::buildJWT($user);
         $this->renderJSON(['token' => $jwt]);
         http_response_code(201);
