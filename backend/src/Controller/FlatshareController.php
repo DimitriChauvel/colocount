@@ -7,6 +7,7 @@ use App\Model\Entity\UserToFlatshare;
 use App\Model\Manager\UserToFlatshareManager;
 use App\Route\Route;
 use App\Model\Manager\FlatshareManager;
+use App\Model\Manager\UserManager;
 use App\Model\Factory\PDOFactory;
 use function Sodium\add;
 
@@ -59,6 +60,14 @@ class FlatshareController extends AbstractController
     public function homepage() {
         $currentUser = $this->checkJwtAndGetUser();
         $flatshareManager = new FlatshareManager(new PDOFactory());
+        $userManager = new UserManager(new PDOFactory());
+        $user = $userManager->getOne($currentUser);
+        if (empty($user)) {
+            $this->renderJSON([
+                'message' => 'No user'
+            ]);
+            die();
+        }
         $flatshares = $flatshareManager->getAllFlatsharesByUser($currentUser);
         if (empty($flatshares)) {
             $this->renderJSON([
@@ -67,6 +76,7 @@ class FlatshareController extends AbstractController
             die();
         }
         $this->renderJSON([
+            'user' => $user,
             'flashares' => $flatshares
         ]);
         http_response_code(200);
