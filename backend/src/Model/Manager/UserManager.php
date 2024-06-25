@@ -54,8 +54,6 @@ class UserManager extends BaseManager
 
     public function putOne(User $user): User
     {
-    
-
         $query = $this->pdo->prepare(<<<EOT
             UPDATE Users 
             SET firstname = :firstname,
