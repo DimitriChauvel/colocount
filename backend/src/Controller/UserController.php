@@ -117,4 +117,18 @@ class UserController extends AbstractController
         $this->renderJSON(['message' => 'User updated']);
         die();
     }
+
+    #[Route('/profil', name: "delete_profil", methods: ["DELETE"])]
+    public function deleteProfil() {
+        $userId = $this->checkJwtAndGetUser();
+        $userManager = new UserManager(new PDOFactory());
+        $user = $userManager->getOne($userId);
+        if (!$user) {
+            $this->renderJSON(['error' => 'User not found'], 404);
+            die();
+        }
+        $userManager->deleteOne($userId);
+        $this->renderJSON(['message' => 'User deleted']);
+        die();
+    }
 }

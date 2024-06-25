@@ -111,4 +111,11 @@ class UserManager extends BaseManager
 
         return $user;
     }
+
+    public function deleteOne(string $id): void
+    {
+        $query = $this->pdo->prepare('DELETE FROM Users WHERE id = :id');
+        $query->bindValue(':id', $id, \PDO::PARAM_STR);
+        $query->execute();
+    }
 }
