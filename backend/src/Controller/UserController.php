@@ -57,6 +57,14 @@ class UserController extends AbstractController
             $this->renderJSON(['error' => 'Email already in use'], 400);
             die();
         }
+        if (isset($response['phone'])) {
+            $phone = $response['phone'];
+            $user = $userManager->getByPhone($phone);
+            if ($user) {
+                $this->renderJSON(['error' => 'Phone number already in use'], 400);
+                die();
+            }
+        }
         $user = new User($response);
         $user = $userManager->postOne($user);
         $jwt = JWTHelper::buildJWT($user);
@@ -115,6 +123,20 @@ class UserController extends AbstractController
 
         $userManager->putOne($user);
         $this->renderJSON(['message' => 'User updated']);
+        die();
+    }
+
+    #[Route('/profil', name: "delete_profil", methods: ["DELETE"])]
+    public function deleteProfil() {
+        $userId = $this->checkJwtAndGetUser();
+        $userManager = new UserManager(new PDOFactory());
+        $user = $userManager->getOne($userId);
+        if (!$user) {
+            $this->renderJSON(['error' => 'User not found'], 404);
+            die();
+        }
+        $userManager->deleteOne($userId);
+        $this->renderJSON(['message' => 'User deleted']);
         die();
     }
 }
