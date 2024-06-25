@@ -7,8 +7,8 @@ class User extends BaseEntity
     private string $firstname;
     private string $lastname;
     private string $email;
-    private ?string $phone;
-    private ?string $profile_picture;
+    private ?string $phone = null;
+    private ?string $profile_picture = null;
     private string $password;
     private string $date_created;
     

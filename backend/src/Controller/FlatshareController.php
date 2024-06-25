@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Model\Entity\User;
-use App\Model\Entity\UserToFlatshare;
-use App\Model\Manager\UserToFlatshareManager;
 use App\Route\Route;
+use App\Model\Entity\Flatshare;
 use App\Model\Manager\FlatshareManager;
 use App\Model\Manager\UserManager;
 use App\Model\Factory\PDOFactory;
@@ -24,17 +22,17 @@ class FlatshareController extends AbstractController
 
     #[Route('/homepage', name: "homepage", methods: ["GET"])]
     public function homepage() {
-        $currentUser = $this->checkJwtAndGetUser();
+        $userId = $this->checkJwtAndGetUser();
         $flatshareManager = new FlatshareManager(new PDOFactory());
         $userManager = new UserManager(new PDOFactory());
-        $user = $userManager->getOne($currentUser);
+        $user = $userManager->getOne($userId);
         if (empty($user)) {
             $this->renderJSON([
                 'message' => 'No user'
             ]);
             die();
         }
-        $flatshares = $flatshareManager->getAllFlatsharesByUser($currentUser);
+        $flatshares = $flatshareManager->getAllFlatsharesByUser($userId);
         if (empty($flatshares)) {
             $this->renderJSON([
                 'message' => 'No flatshare'
@@ -46,6 +44,27 @@ class FlatshareController extends AbstractController
             'flashares' => $flatshares
         ]);
         http_response_code(200);
+        die();
+    }
+
+    #[Route('/flatshare', name: "add_flatshare", methods: ["POST"])]
+    public function addFlatshare() {
+        $userId = $this->checkJwtAndGetUser();
+
+        $response = json_decode(file_get_contents('php://input'), true);
+        if (!isset($response['name'])) {
+            $this->renderJSON(['error' => 'Missing field'], 400);
+            die();
+        }
+
+        $flatshareManager = new FlatshareManager(new PDOFactory());
+        //$userToFlatshareManager = new UserToFlatshareManager(new PDOFactory());
+
+        $flatshare = new Flatshare($response);
+        $flatshare = $flatshareManager->postOne($flatshare);
+        //$userToFlatshare = $userToFlatshareManager->postOne($userId, $flatshare->getId());
+        $this->renderJSON($flatshare);
+        http_response_code(201);
         die();
     }
 }

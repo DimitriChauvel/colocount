@@ -50,16 +50,16 @@ class FlatshareManager extends BaseManager
         $query->execute();
     }
 
-    public function postOne(): Flatshare {
-        $body = json_decode(file_get_contents('php://input'), true);
+    public function postOne(Flatshare $flatshare): Flatshare {
         $uniqueId = uniqid('flatshare_');
+
         $query = $this->pdo->prepare(<<<EOT
             INSERT INTO Flatshare (id, banner_picture, name) 
             VALUES (:id, :banner_picture, :name)
         EOT);
         $query->bindValue(':id', $uniqueId, \PDO::PARAM_STR);
-        $query->bindValue(':banner_picture', $body["banner_picture"], \PDO::PARAM_STR);
-        $query->bindValue(':name', $body["name"], \PDO::PARAM_STR);
+        $query->bindValue(':banner_picture', $flatshare->getBannerPicture(), \PDO::PARAM_STR);
+        $query->bindValue(':name', $flatshare->getName(), \PDO::PARAM_STR);
         $query->execute();
 
         return $this->getOne($uniqueId);
