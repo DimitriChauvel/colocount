@@ -44,16 +44,15 @@ class UserToFlatshareManager extends BaseManager
     }
 
 
-    public function postOne(): UserToFlatshare {
-        $body = json_decode(file_get_contents('php://input'), true);
+    public function postOne(UserToFlatShare $userToFlatshare): UserToFlatshare {
         $uniqueId = uniqid('UserToFlatshare_');
         $query = $this->pdo->prepare(<<<EOT
             INSERT INTO UserToFlatshare (id, user_id, flatshare_id)
             VALUES (:id, :user_id, :flatshare_id)
         EOT);
         $query->bindValue(':id', $uniqueId, \PDO::PARAM_STR);
-        $query->bindValue(':user_id', $body['user_id'], \PDO::PARAM_STR);
-        $query->bindValue('flatshare_id', $body['flatshare_id'], \PDO::PARAM_STR);
+        $query->bindValue(':user_id', $userToFlatshare->getUserId(), \PDO::PARAM_STR);
+        $query->bindValue('flatshare_id', $userToFlatshare->getFlatshareId(), \PDO::PARAM_STR);
         $query->execute();
         return $this->getOne($uniqueId);
     }
