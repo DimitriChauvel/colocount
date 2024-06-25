@@ -47,8 +47,8 @@ class UserManager extends BaseManager
         $uniqueId = uniqid('user_');
 
         $query = $this->pdo->prepare(<<<EOT
-            INSERT INTO Users (id, firstname, lastname, email, password, phone)
-            VALUES (:id, :firstname, :lastname, :email, :password, :phone)
+            INSERT INTO Users (id, firstname, lastname, email, password, phone, profile_picture)
+            VALUES (:id, :firstname, :lastname, :email, :password, :phone, :profile_picture)
         EOT);
         $query->bindValue(':id', $uniqueId, \PDO::PARAM_STR);
         $query->bindValue(':firstname', $user->getFirstname(), \PDO::PARAM_STR);
@@ -56,6 +56,7 @@ class UserManager extends BaseManager
         $query->bindValue(':email', $user->getEmail(), \PDO::PARAM_STR);
         $query->bindValue(':password', $user->getPassword(), \PDO::PARAM_STR);
         $query->bindValue(':phone', $user->getPhone(), \PDO::PARAM_STR);
+        $query->bindValue(':profile_picture', $user->getProfilePicture(), \PDO::PARAM_STR);
         $query->execute();
 
         return $this->getOne($uniqueId);
