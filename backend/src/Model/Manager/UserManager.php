@@ -33,6 +33,15 @@ class UserManager extends BaseManager
         return $data ? new User($data) : null;
     }
 
+    public function getByPhone(string $phone): ?User {
+        $query = $this->pdo->prepare('SELECT * FROM Users WHERE phone = :phone');
+        $query->bindValue(':phone', $phone, \PDO::PARAM_STR);
+        $query->execute();
+        $data = $query->fetch(\PDO::FETCH_ASSOC);
+
+        return $data ? new User($data) : null;
+    }
+
     public function postOne(User $user): User
     {
         $uniqueId = uniqid('user_');

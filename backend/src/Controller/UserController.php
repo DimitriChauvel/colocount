@@ -57,6 +57,14 @@ class UserController extends AbstractController
             $this->renderJSON(['error' => 'Email already in use'], 400);
             die();
         }
+        if (isset($response['phone'])) {
+            $phone = $response['phone'];
+            $user = $userManager->getByPhone($phone);
+            if ($user) {
+                $this->renderJSON(['error' => 'Phone number already in use'], 400);
+                die();
+            }
+        }
         $user = new User($response);
         $user = $userManager->postOne($user);
         $jwt = JWTHelper::buildJWT($user);
